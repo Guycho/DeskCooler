@@ -12,21 +12,7 @@ void PWMDriver::begin(float percentage) {
 }
 
 void PWMDriver::setSpeed(float percentage) {
-    _percentage = percentage;
-    _pwm = map(_percentage, 0, 100, 0, _maxPwmValue);
+    _percentage = constrain(percentage, 0.0f, 100.0f);
+    _pwm = (_percentage / 100.0f) * _maxPwmValue;
     analogWrite(_pin, _pwm);
-}
-
-void PWMDriver::stop() {
-    setSpeed(0);
-}
-
-void PWMDriver::on() {
-    _on = true;
-    stop();
-}
-
-void PWMDriver::off() {
-    _on = false;
-    stop();
 }
